@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
 /dist
+public/upload/temp
 
 
 # local env files
