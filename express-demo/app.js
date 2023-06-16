@@ -8,7 +8,7 @@ const express = require('express')
 // 创建一个 express 的实例 app
 const app = express()
 // 指定端口
-const port = 3123
+const port = 5345
 
 // 引入 path 处理路径
 const path = require('path')
@@ -62,5 +62,5 @@ app.use(function (req, res, next) {
 // 监听端口
 app.listen(port, () => {
   // 启动成功时执行
-  console.log(`Example app listening on port ${port}`)
+  console.log(`服务启动成功: http://localhost:${port}/`)
 })
