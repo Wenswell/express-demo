@@ -377,3 +377,29 @@ COMMIT;
 ```sqlite
 
 ```
+
+
+
+# 踩坑
+
+## 文件夹重名导致路径错误
+```bash
+C:.
+├─db
+│      index.js
+│      SQLite.md
+│      test-2023-06-15-19-42.sqlite3
+│      
+└─router
+    ├─db
+    │      index.js
+    │      messages.js
+    │      users.js
+    └─default
+```
+在 `'../router/db/messages.js'` 里
+引用 `const {db} = require('../db')` 
+引用的文件是 `'../router/db/index.js'` 
+而不是需要的 `'../db/index.js'`
+
+结果报错 `Warning: Accessing non-existent property 'db' of module exports inside circular dependency`

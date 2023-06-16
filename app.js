@@ -30,11 +30,12 @@ app.use(upload.any())
 app.use(express.json())
 
 // 当客户端访问匹配的路径时,Express 直接返回对应的静态文件,不需要额外的路由处理
+// 根路径默认导向 './public/index.html'
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 默认导向router
+// 默认导向router，不在app.js中写请求处理
+// app.use('/db',require('./router/DbRouter'))
 app.use(require('./router'))
-// 完整：app.use('/route-test', require('./router'))
 
 // 全局中间件
 // 固定代码：开放跨域请求
@@ -45,11 +46,18 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "content-type");
   // 允许的HTTP方法
   res.header("Access-Control-Allow-Methods", "DELETE,PUT,POST,GET,OPTIONS");
-  // 如果是预检请求(OPTIONS),则返回状态200
+  // 如果是预检请求(OPTIONS),则直接返回状态200
   if (req.method == "OPTIONS") res.sendStatus(200);
   // 不是预检请求,则继续向下执行其他路由或中间件函数
   else next();
 })
+
+// 所有请求
+// 中间件执行后传递至此处处理（与中间件效果类似）
+// router.all('*', function (req, res, next) {
+//   console.log('all * 捕获')
+//   next()
+// })
 
 // 监听端口
 app.listen(port, () => {
